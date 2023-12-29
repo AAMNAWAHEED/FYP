@@ -1,0 +1,35 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: white;
+}
+
+header a {
+    text-decoration: none;
+    color: #333;
+    margin: 0 10px;
+}
+
+header h1 {
+    margin: 0;
+}
+
+/* Adjust styles as needed */
+header a:hover {
+    color: burlywood;
+}
+footer{
+    font-size: smaller;
+    text-align: center;
+}
+.links a{
+    text-decoration: none;
+    color: black;
+}

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+    <title>customer List</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
+        }
+        .main-container {
+            margin: 20px;
+            background-color: #c6dcf3;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+    
+    .container {
+        margin: 20px;
+    }
+    h1 {
+        font-size: 24px;
+    }
+
+    .search-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    input[type="text"] {
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    
+    th, td {
+        padding: 8px 12px;
+        text-align: left;
+    }
+    
+    th {
+        background-color: #f2f2f2;
+    }
+    
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+    
+    tr:hover {
+        background-color: #ddd;
+    }
+</style>    
+</head>
+<body>
+    <div class="main-container">
+        <div class="header">
+            <h1>Customer List</h1>
+            <div class="search-container">
+                <form action="/searchcustomer" method="POST">
+                    <label for="searchcust"></label>
+                    <input type="text" name="searchcust" id="searchcust" placeholder="Enter customer name or id" required>
+
+                </form>
+            </div>
+        </div>
+    <div class="container">
+        <h1>customer List</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Gender</th>
+                    <th>Date of Birth</th>
+                    <th>mobile-number</th>
+                    <th>email</th>
+                    <th>registration_date</th>
+                    <th>password</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for customer in customers %}
+                <tr>
+                    <td>{{ customer.customer_id }}</td>
+                    <td>{{ customer.first_name }}</td>
+                    <td>{{ customer.last_name}}</td>
+                    <td>{{customer.gender}}</td>
+                    <td>{{ customer.dob}}</td>
+                    <td>{{customer.mobile_number}}</td>
+                    <td>{{customer.email}}</td>
+                    <td>{{customer.registration_date}}</td>
+                    <td>{{customer.Password}}</td>
+                    
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

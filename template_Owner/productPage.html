@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product List</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            margin: 20px;
+            background-color: #c6dcf3;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .add-product-button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 16px;
+            cursor: pointer;
+        }
+
+        .category-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .category-list li::before {
+            content: "•";
+            color: #007bff;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            padding: 8px 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+        .category-list {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 0;
+            margin: 0;
+            font-size: 18px;
+            margin-bottom: 10px;
+            list-style-type: none;
+        }
+        .category-list li {
+            flex: 1;
+            margin-right: 10px;
+            list-style-type: none; /* Remove list dots */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Product List</h1>
+            {%if stock%}
+            <P style="color: red;"><B>ALERT</B></P>
+            <a href="/lowstock"> <p style="color: red;">{{stock}} PRODUCTS HAVE LOW STOCK</p></a>
+            {%endif%}
+            <div class="search-container">
+                <form action="/searchpro" method="POST">
+                    <label for="searchpro"></label>
+                    <input type="text" name="searchpro" id="searchpro" placeholder="Enter product name" required>
+
+                </form>
+                <form action="/addproduct" method="POST">
+                    <!-- Other form fields go here -->
+                    <button class="add-product-button" type="submit">Add Product</button>
+                </form>
+            </div>
+        </div>
+        <ul class="category-list">
+            <li>1: stitch</li>
+            <li>2: unstitch</li>
+            <li>3: fragrance</li>
+            <li>4: footwear</li>
+            <li>5: bottom</li>
+            <!-- Add more categories as needed -->
+        </ul>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Description</th>
+                    <th>Category</th>
+                </tr>
+            </thead>
+            <tbody>
+                    {% for product in products %}
+                    <tr>
+                        <td>{{ product.product_id }}</td>
+                        <td>{{ product.name }}</td>
+                        <td>{{ product.price }}</td>
+                        <td>{{ product.stock }}</td>
+                        <td>{{ product.description }}</td>
+                        <td>{{ product.category_name }}</td>
+                        <th><a href="{{url_for('viewProduct', product_id=product.product_id)}}">View</a></th>
+                        <th><a href="{{url_for('editProduct',product_id = product.product_id)}}">Edit</a></th>
+                    </tr>
+                    {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

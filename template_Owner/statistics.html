@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Top Countries Sales</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 300px;
+            margin: auto 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            text-align: center;
+        }
+        .customer-box { /* Added new CSS class for the customer box */
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 20px;
+            max-width: 200px;
+            text-align: center;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+        .chart-container {
+            flex: 1; /* Divide available space equally among charts */
+            margin: 20px;
+            margin-right: 100px;
+            margin-left: 100px;
+            padding: 0; /* Add some margin for spacing */
+        }     
+    </style>
+</head>
+<body>
+    <div class="customer-box"> 
+        <h2>No of Customers</h2>
+        <p>{{total_customers}}</p> 
+    </div>
+    <div class="container">
+        <table>
+            <h1>Top Countries Sales</h1>
+            <tr>
+                <th>Country</th>
+                <th>Total Sales (Rs.)</th>
+            </tr>
+            {% for key,value in city.items() %}
+            <tr>
+                <td>{{key}}</td>
+                <td>{{value}}</td>
+            </tr>
+            {% endfor%}
+        </table>
+    </div>
+    <div class="chart-conatiner">
+        <h2>avg</h2>
+        <canvas id="customerChart"></canvas>
+    </div>
+    <script>
+        var months = ['January', 'February', 'March', 'April', 'May','June','July','August','September','October','Novermebr','December'];
+        var cus_per_month = JSON.parse('{{ cus_per_month |tojson | safe }}');
+        var cus_per_month = JSON.parse(cus_per_month);
+        // Create a line chart
+        var ctx = document.getElementById('customerChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: months,
+                datasets: [{
+                    label: 'Number of Customers',
+                    data: cus_per_month,
+                    borderColor: 'blue', // Color of the line
+                    backgroundColor: 'rgba(0, 0, 255, 0.2)', // Fill color under the line
+                    borderWidth: 2, // Line width
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+l>

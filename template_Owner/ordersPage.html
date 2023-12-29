@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <title>order List</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
+        }
+        .main-container {
+            margin: 20px;
+            background-color: #c6dcf3;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+    
+    .container {
+        margin: 20px;
+    }
+    h1 {
+        font-size: 24px;
+    }
+
+    .search-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    input[type="text"] {
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    
+    th, td {
+        padding: 8px 12px;
+        text-align: left;
+    }
+    
+    th {
+        background-color: #f2f2f2;
+    }
+    
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+    
+    tr:hover {
+        background-color: #ddd;
+    }
+</style>    
+</head>
+<body>
+    <div class="main-container">
+        <div class="header">
+            <h1>Order List</h1>
+            <div class="search-container">
+                <form action="/searchorder" method="POST">
+                    <label for="searchorder"></label>
+                    <input type="text" name="searchorder" id="searchorder" placeholder="Enter order id" required>
+
+                </form>
+            </div>
+        </div>
+    <div class="container">
+        <h1>Order List</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>OrderID</th>
+                    <th>CustomerID</th>
+                    <th>Date</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order.order_id }}</td>
+                    <td>{{ order.customer_id }}</td>
+                    <td>{{ order.orderDate }}</td>
+                    <td>{{order.amount}}</td>
+                    <td>{{ order.status }}</td>
+                    
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-...." crossorigin="anonymous" />
+    <link rel="stylesheet" href="static/main.css">
+    <title>Zellbury Online Store</title>
+    {% block style%} {% endblock%}
+    <style>
+
+        h1 {
+            font-size: 1.5em;
+            color: #333;
+        }
+        .full-width-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .row-images {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+
+        img {
+            margin: 10px; /* Adjust margin as needed */
+            max-width: 100%;
+            height: auto;
+        }
+        .caption{
+            display: flex;
+            flex-direction: column;
+            background-color: rgb(247, 240, 240);
+            padding: 10px;
+            margin: 10px;
+            
+        }
+        .caption img{
+            height: 350px;
+            width: 250px;
+        }
+        .caption a{
+            text-decoration: none;
+            text-align: center;
+            color: black;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <div>
+        <a href="">WOMAN</a>
+        <a href="">FRAGRANCE</a>
+        <a href="">HOME</a>
+        <a href="">BAGS</a>
+        </div>
+        <h1>ZELLBURY</h1>
+        <div>
+            <a href="/account"><i class="fas fa-user"></i>ACCOUNT</a>
+            <a href="/viewCart"><i class="fas fa-shopping-cart"></i>CART</a>
+            <a href=""><i class="fas fa-search"></i></a>
+
+        </div>
+    </header>
+    {% block content %}
+    {% endblock %}
+    <footer>
+        <div class="links">
+            <a href="">privacy policy</a>|
+            <a href="">Shopping Terms and Conditions</a>
+        </div>
+        <p>ZELLBURY© 2023 - All rights reserved.</p>
+    </footer>
+</body>
+</html>

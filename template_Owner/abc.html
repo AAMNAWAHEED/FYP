@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Include Chart.js library -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+        .header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            margin: 0;
+        }
+        
+        .header a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        
+        .header a:hover {
+            text-decoration: underline;
+        }
+        
+        .header .icon {
+            font-size: 24px;
+            margin-right: 5px;
+        }
+
+        .dashboard {
+            text-align: center;
+        }
+        h4{
+            text-align: center;
+        }
+
+        .dashboard-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .dashboard-item {
+            flex: 1;
+            min-width: 50px;
+            margin: 10px;
+        }
+
+        .dashboard-item-inner {
+            padding: 10px;
+            border: 2px solid #007bff;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .dashboard-item h2 {
+            font-size: 14px;
+            color: #007bff;
+        }
+
+        .dashboard-item .value {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+        }
+    .charts{
+        margin-right: 100px;
+        margin-left: 100px;
+        padding: 0;
+        display: flex;
+        flex-direction: row; /* Align charts horizontally */
+        justify-content: space-between; /* Add space between charts */
+        align-items: center;
+        height: 100vh;
+    }
+        .chart-container {
+            flex: 1; /* Divide available space equally among charts */
+            margin: 20px; /* Add some margin for spacing */
+        }
+
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Admin Dashboard</h1>
+        <a href="/products">
+            <span class="icon">&#127890;</span> 
+            Products
+        </a>
+        <a href="/orders">
+            <span class="icon">&#9203;</span> <!-- Replace with your icon or Unicode character -->
+            Orders
+        </a>
+        <a href="/customers">
+            <span class="icon">&#128101;</span> <!-- Replace with your icon or Unicode character -->
+            Customers
+        </a>
+        <a href="#">
+            <span class="icon">&#128077;</span> <!-- Replace with your icon or Unicode character -->
+            Reviews
+        </a>
+        <a href="/stats">
+            <span class="icon">&#127760;</span> <!-- Replace with your icon or Unicode character -->
+            Statistics
+        </a>
+    </div>
+    <h4>Year</h4>
+    <div class="dashboard">
+        <div class="dashboard-content">
+            <div class="dashboard-item">
+                <div class="dashboard-item-inner">
+                    <h2>Total orders</h2>
+                    <div class="value" >
+                        {{total_years_orders}}
+                    </div>
+                </div>
+            </div>
+            <div class="dashboard-item">
+                <div class="dashboard-item-inner">
+                    <h2>Returned Orders</h2>
+                    <div class="value">
+                        {{total_returned_orders}}
+                    </div>
+                </div>
+            </div>
+            <div class="dashboard-item">
+                <div class="dashboard-item-inner">
+                    <h2>Pending orders</h2>
+                    <div class="value">
+                       {{total_pending_orders}}
+                    </div>
+                </div>
+            </div>
+            <div class="dashboard-item">
+                <div class="dashboard-item-inner">
+                    <h2>Total Sales</h2>
+                    <div class="value">
+                       {{total_sales}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h4>Today</h4>
+    <div class="dashboard">
+        <div class="dashboard-content">
+            <div class="dashboard-item">
+                <div class="dashboard-item-inner">
+                    <h2>Total orders</h2>
+                    <div class="value" >
+                        {{total_today_orders}}
+                    </div>
+                </div>
+            </div>
+            <div class="dashboard-item">
+                <div class="dashboard-item-inner">
+                    <h2>Returned Orders</h2>
+                    <div class="value">
+                        {{today_returned_orders}}
+                    </div>
+                </div>
+            </div>
+            <div class="dashboard-item">
+                <div class="dashboard-item-inner">
+                    <h2>Pending orders</h2>
+                    <div class="value">
+                       {{today_pending_orders}}
+                    </div>
+                </div>
+            </div>
+            <div class="dashboard-item">
+                <div class="dashboard-item-inner">
+                    <h2>Total Sales</h2>
+                    <div class="value">
+                       {{today_sales}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="charts">
+        <div class="chart-container">
+            <h2>Monthly orders</h2>
+            <canvas id="monthlyOrdersChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <h2>Monthly Sales</h2>
+            <canvas id="monthlySalesChart"></canvas>
+        </div>
+    </div>
+    <script>
+
+        var labels = ['January', 'February', 'March', 'April', 'May','June','July','August','September','October','Novermebr','December'];
+        
+        var monthly_orders = JSON.parse('{{ monthly_orders | tojson | safe }}');
+        var monthly_orders = JSON.parse(monthly_orders);
+    
+        //monthly sales
+        var monthly_sales = JSON.parse('{{ monthly_sales | tojson | safe }}');
+        var monthly_sales = JSON.parse(monthly_sales);
+    
+        var monthly_orders_ctx = document.getElementById('monthlyOrdersChart').getContext('2d');
+        var myBarChart = new Chart(monthly_orders_ctx, {
+            type: 'bar', 
+            data: {
+                labels: labels, 
+                datasets: [{
+                    label: 'Monthly orders', 
+                    data:monthly_orders, 
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        beginAtZero: false, 
+                        ticks: {
+                            autoSkip: false, 
+                            maxRotation: 45, 
+                            minRotation: 0 
+                        }
+                    },            
+                    y: {
+                        beginAtZero: true 
+                    }
+                }
+            }
+        });
+    
+        var monthly_sales_ctx = document.getElementById('monthlySalesChart').getContext('2d');
+        var myBarChart = new Chart(monthly_sales_ctx, {
+            type: 'bar', 
+            data: {
+                labels: labels, 
+                datasets: [{
+                    label: 'Monthly Sales', 
+                    data:monthly_sales, 
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        beginAtZero: false, 
+                        ticks: {
+                            autoSkip: false, 
+                            maxRotation: 45, 
+                            minRotation: 0 
+                        }
+                    },            
+                    y: {
+                        beginAtZero: true 
+                    }
+                }
+            }
+        });
+</script>   
+</body>
+</html>

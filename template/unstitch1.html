@@ -1,0 +1,53 @@
+{% extends 'mainPage.html'%}
+{% block style%}
+    <style>
+        .rows{
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            margin-top: 50px;
+        }
+        .image-block{
+            align-items: center;
+            text-overflow: ellipsis;
+            box-sizing: border-box; /* Include padding and border in the element's total width and height */
+            flex: 0 0 33%; /* Set the flex-basis to 25%, which means four items per row */
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+        }
+        .image-block img{
+            width: 200px;
+            height: 230px;
+        }
+        .buttons{
+            text-align: center;
+        }
+        .buttons a{
+            color: black;
+            text-decoration: none;
+        }
+        .buttons a:hover{
+            color:rgb(204, 204, 235);
+        }
+    </style>
+{% endblock %}
+    {% block content %}
+    <div class="rows">
+        
+        {% for product in products %}
+        <div class="image-block">
+            <a href="{{url_for('viewProduct', product_id=product.product_id)}}">
+            <img src={{product.image1_url}} alt="{{product.image1_url}}">
+            <p>{{product.price}}</p>
+            <p>{{product.name}}</p> 
+            </a>  
+        </div>
+        {% endfor %}
+    </div>
+    <div class="buttons">
+        <a href="/unstitch">1</a>
+        <a href="/unstitch2">2</a>
+    </div>
+    {% endblock %}

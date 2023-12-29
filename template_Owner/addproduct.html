@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Product</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            margin-top: 20px;
+            margin-left: 100px;
+            margin-right: 100px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 16px;
+        }
+
+        select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 16px;
+        }
+
+        .add-button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 16px;
+            cursor: pointer;
+        }
+
+        .add-button:hover {
+            background-color: #0056b3;
+        }
+        #success-dialog {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Add Product</h1>
+        </div>
+        <form action="form_add_product" method="POST" enctype="multipart/form-data">
+            <label for="name">Product Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="price">Price:</label>
+            <input type="number" id="price" name="price" required>
+
+            <label for="stock">Stock:</label>
+            <input type="number" id="stock" name="stock" required>
+
+            <label for="desc">Description:</label>
+            <textarea id="desc" name="desc" rows="4" required></textarea>
+            
+            <label for="category">Category:</label>
+            <select id="category" name="category" required>
+                <option value="stitch">stitch</option>
+                <option value="unstitch">unstitch</option>
+                <option value="fragrance">fragrance</option>
+                <option value="footwear">footwear</option>
+                <option value="bottom">bottom</option>
+            </select>
+
+            <!-- Image upload options -->
+            <label for="image1">Image 1:</label>
+            <input type="file" id="image1" name="image1" accept="image/*">
+
+            <label for="image2">Image 2:</label>
+            <input type="file" id="image2" name="image2" accept="image/*">
+
+            <label for="image3">Image 3:</label>
+            <input type="file" id="image3" name="image3" accept="image/*">
+
+            <label for="image4">Image 4:</label>
+            <input type="file" id="image4" name="image4" accept="image/*">
+
+            <button class="add-button" type="submit" onclick="showDialog()">Add Product</button>
+        </form>
+        <div id="success-dialog">
+            <p>Product has been added successfully!</p>
+            <button onclick="closeDialog()">Close</button>
+        </div>
+        <script>
+            // JavaScript function to show the success dialog
+            function showSuccessDialog() {
+                var successDialog = document.getElementById('success-dialog');
+                successDialog.style.display = 'block';
+            }
+    
+            // JavaScript function to close the dialog
+            function closeDialog() {
+                var successDialog = document.getElementById('success-dialog');
+                successDialog.style.display = 'none';
+            }
+    
+            // Automatically show the dialog when the page loads (if needed)
+            // showSuccessDialog();
+        </script>
+    </div>
+</body>
+</html>

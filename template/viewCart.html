@@ -1,0 +1,42 @@
+{%extends 'base.html'%}
+{% block style%}
+<style>
+    .container{
+        display: flex;
+        flex-direction: row;padding: 50px;
+    }
+    .main-list img{
+        width: 100px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<h3>Shopping Cart</h3>
+<div class="container">
+    <div class="main-list">
+        <table>
+            <tr>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+            </tr>
+            {%for product in products%}
+            <tr>
+                <td><a href="{{url_for('viewProduct', product_id=product.product_id)}}"><img src="/{{product.image1_url}}" alt="image">{{product.name}}</a></td>
+                <td>{{product.quantity}}</td>
+                <td>{{product.price}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div class="right-container">
+        <h3>SUMMARY</h3>
+        {%for product in products%}
+            <p>subtotal:    Rs.{{product.price}}</p>
+        {% endfor %}
+        <p>TAX:     Rs.0</p>
+        <p>TOTAL:   Rs.000s</p>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .main-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .image-container {
+            display: flex;
+            flex-direction: column;
+            margin-right: 20px;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .info-container {
+            padding: 10px;
+            box-sizing: border-box;
+            flex-grow: 1;
+        }
+
+        /* Additional styling for better presentation */
+        .main-container {
+            border: 1px solid #ddd;
+            padding: 20px;
+        }
+
+        .info-container {
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            font-size: 16px; /* Adjust the font size as needed */
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="image-container">
+                <img src='/{{product.image1_url}}' alt="image1">
+                <img src='/{{product.image2_url}}' alt="image2">
+                <img src='/{{product.image3_url}}' alt="image3">
+                <img src='/{{product.image4_url}}' alt="image4">
+        </div>
+        <div class="info-container">
+            <p><b>NAME:</b>{{product.name}}</p>
+            <p><b>DESCRIPTION:</b>{{product.description}}</p>
+            <p><b>PRICE:</b>{{product.price}}</p>
+            <p><b>STOCK:</b>{{product.stock}}</p>
+            <p><b>TOTAL SALES:</b></p>
+        </div>
+    </div>
+    
+</body>
+</html>
