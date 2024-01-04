@@ -1,18 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+{% extends 'base.html' %}
+{% block style%}
     <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-
         .main-container {
             display: flex;
             justify-content: center;
@@ -32,27 +20,31 @@
             height: auto;
             margin-bottom: 10px;
         }
-
-        .info-container {
-            padding: 10px;
-            box-sizing: border-box;
-            flex-grow: 1;
-        }
-
-        /* Additional styling for better presentation */
         .main-container {
-            border: 1px solid #ddd;
-            padding: 50px;
+            margin-top: 30px;
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 800px;
+            width: 100%;
         }
-
         .info-container {
-            background-color: #f8f8f8;
-            border: 1px solid #ddd;
-            font-size: 16px; /* Adjust the font size as needed */
+            padding-left: 30px;
+            margin: 20px;
+            font-size: 16px; 
             
         }
+        .info-container button{
+            margin-top: 20px;
+            border: none;
+            background-color: rgba(232, 110, 110, 0.652);
+            padding:10px;
+            font-weight: bold;
+        }
+        .info-container button:hover{
+            background-color:rgba(233, 127, 127, 0.652) ;
+        }
         .center-image img{
-            width: 250px;
+            width: 450px;
         }
         #quantity-container {
             display: flex;
@@ -70,13 +62,8 @@
             font-size: 18px;
           }
     </style>
-    <script>
-        function getQuantity(){
-            return parseInt(document.getElementById('quantity'),10)
-        }
-    </script>
-</head>
-<body>
+{% endblock%}
+{% block content %}
     <div class="main-container">
         <div class="image-container">
                 <img src='/{{product.image1_url}}' alt="image1">
@@ -88,21 +75,69 @@
             <img src="/{{product.image1_url}}" alt="LOADING">
         </div>
         <div class="info-container">
-            <p><b>NAME:</b>{{product.name}}</p>
-            <p><b>DESCRIPTION:</b>{{product.description}}</p>
-            <p><b>PRICE:</b>{{product.price}}</p>
-            <p><b>STOCK:</b>{{product.stock}}</p>
+            <p style="font-size: large;"><b>{{product.name}}</b></p>
+            <p style="font-size: small;">{{product.description}}</p>
+            <p><b>Rs.{{product.price}}</b></p>
+            <!--<p><b>STOCK:</b>{{product.stock}}</p>-->
             <form action="{{url_for('addtocart',product_id = product.product_id)}}" method="POST">
                 <div id="quantity-container">
                     <div id="decrement" onclick="decrementQuantity()">-</div>
                     <input type="text" id="quantity" name="quantity" value="1" readonly>
                     <div id="increment" onclick="incrementQuantity()">+</div>
                   </div>
-                <p><b>TOTAL SALES:</b></p>
+                  {% if size_chart %}
+                    <table>
+                        <tr>
+                            <td>Size</td>
+                            {% for size in size_chart%}
+                              <button onclick="changesize()"><th>{{size.size}}</th></button>
+                            {% endfor %}
+                        </tr>
+                        <tr>
+                            <td></td>
+                            {% for size in size_chart%}
+                                <td>{{size.stock}}</td>
+                            {% endfor%}
+                        </tr>
+                        <tr>
+                            <td>Length</td>
+                            {% for size in size_chart%}
+                                <td>{{size.length}}</td>
+                            {% endfor%}
+                        </tr>
+                        <tr>
+                            <td>shoulder</td>
+                            {% for size in size_chart%}
+                                <td>{{size.shoulder}}</td>
+                            {% endfor%}
+                        </tr>
+                        <tr>
+                            <td>Chest</td>
+                            {% for size in size_chart%}
+                                <td>{{size.chest}}</td>
+                            {% endfor%}
+                        </tr>
+                        <tr>
+                            <td>hip</td>
+                            {% for size in size_chart%}
+                                <td>{{size.hip}}</td>
+                            {% endfor%}
+                        </tr>
+                    </table>
+                    
+                </form>
+                  {% endif%}
+               <!-- <p><b>TOTAL SALES:</b></p>-->
                 <button>ADD TO BAG</button>
             </form>
+            <form action="/uploadimage" method="POST">
+                <label for="image">image</label>
+                <input type="file" id="image" name="image">
+                <button>submit</button>
         </div>
     </div>
+{% endblock %}
+{% block script %}
     <script>
         // JavaScript functions to handle quantity changes
         function incrementQuantity() {
@@ -123,7 +158,10 @@
             quantityInput.value = currentQuantity - 1;
           }
         }
+
+        //change size
+        function changesize(){
+            var size = document.getElementById('');
+        }
       </script>
-    
-</body>
-</html>
+      {% endblock%}

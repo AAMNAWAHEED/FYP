@@ -1,53 +1,137 @@
-{% extends 'mainPage.html'%}
-{% block style%}
+{% extends 'mainPage.html' %}
+{% block style %}
     <style>
-        .rows{
+        .rows {
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
-            margin-top: 50px;
+            margin-top: 10px;
+            padding: 30px;
+            justify-content: center; /* Center the image blocks horizontally */
         }
-        .image-block{
+
+        .image-block {
             align-items: center;
             text-overflow: ellipsis;
-            box-sizing: border-box; /* Include padding and border in the element's total width and height */
-            flex: 0 0 33%; /* Set the flex-basis to 25%, which means four items per row */
-            padding: 10px;
+            width: 250px;
+            height: auto;
+            flex: 0 0 30%; /* Adjusted flex-basis for better spacing */
+            margin: 20px; /* Add margin for spacing between image blocks */
             display: flex;
             flex-direction: column;
-            padding: 10px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease-in-out;
         }
-        .image-block img{
-            width: 200px;
-            height: 230px;
+        .image-block a{
+            text-decoration: none;
+            color: black;
         }
-        .buttons{
+        .image-block:hover {
+            transform: translate(0, -5px);
+        }
+
+        .image-block img {
+            width: 250px; /* Make the image fill the container */
+            height: 300px; /* Maintain aspect ratio */
+        }
+
+        .image-block p:first-child {
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .image-block p:last-child {
+            width: 250px;
+            text-overflow: ellipsis;
+            margin: 0;
+        }
+
+        .buttons {
             text-align: center;
+            margin-top: 20px;
         }
-        .buttons a{
+
+        .buttons a {
             color: black;
             text-decoration: none;
         }
-        .buttons a:hover{
-            color:rgb(204, 204, 235);
+
+        .buttons a:hover {
+            color: rgb(204, 204, 235);
+        }
+        .heading-container{
+            background-color: rgb(248, 224, 228);
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            margin-left: 100px;
+            margin-right: 100px;
+            margin-top: 10px;
+        }
+        .heading-container img{
+            width: 50%;
+        }
+        .heading-container .left{
+            flex: 1;
+        }
+        .heading-container .right{
+            margin-left: 20px;
         }
     </style>
 {% endblock %}
-    {% block content %}
-    <div class="rows">
-        
-        {% for product in products %}
-        <div class="image-block">
-            <a href="{{url_for('viewProduct', product_id=product.product_id)}}">
-            <img src={{product.image1_url}} alt="{{product.image1_url}}">
-            <p>{{product.price}}</p>
-            <p>{{product.name}}</p> 
-            </a>  
+
+{% block content %}
+    <div class="heading-container">
+        <div class="left">
+            <h3>{{category_name}}</h3>
+            <p style="font-size: small;">Starting from Rs. {{starting}}</p>
         </div>
+        <div class="right">
+            <img src='/{{image}}' alt="{{image}}">
+        </div>
+    </div>
+
+    <div class="heading-container">
+        <p>{{total_items}}items found</p>
+        <div class="buttons">
+            <a href="{{url_for('unstitch',category=category,page=1)}}">1</a>
+            <a href="{{url_for('unstitch',category=category,page=2)}}">2</a>
+        </div>
+        <form id="sort-form" action="{{url_for('unstitch',category=category,page=1)}}" method="POST">
+            <select name="sort-order" id="sort-order" onchange="submitForm()">
+                <!--adding it because for first onchange() event is not occuring-->
+                <option value="" disabled selected>Choose an option</option> 
+                <option value="ASC-name">Name: A to Z</option>
+                <option value="DESC-name">Name: Z to A</option>
+                <option value="DESC-price">Price: High to Low</option>
+                <option value="ASC-price">Price: Low To High</option> 
+            </select>
+        </form>
+    </div>
+
+    <div class="rows">
+        {% for product in products %}
+            <div class="image-block">
+                <a href="{{url_for('viewProduct', product_id=product.product_id)}}">
+                    <img src={{product.image1_url}} alt="Loading">
+                    <p><b>{{product.price}}</b></p>
+                    <p>{{product.name}}</p>
+                </a>
+            </div>
         {% endfor %}
     </div>
     <div class="buttons">
-        <a href="/unstitch">1</a>
-        <a href="/unstitch2">2</a>
+        <a href="{{url_for('unstitch',category=category,page=1)}}">1</a>
+        <a href="{{url_for('unstitch',category=category,page=2)}}">2</a>
     </div>
-    {% endblock %}
+{% endblock %}
+{% block script %}
+<script>
+    function submitForm(){
+        var form = document.getElementById('sort-form')
+        form.submit()
+    }
+</script>
+{% endblock%}

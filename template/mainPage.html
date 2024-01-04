@@ -1,48 +1,63 @@
 {% extends 'base.html'%}
+{% block style %}
+<style>
+    #hiddenBox {
+      display: none;
+      margin-top: 10px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      background-color: #f0f0f0;
+    }
+  </style>
+{% endblock %}
 {% block content %}
+<div id="hiddenBox">
+    <p>Order has been placed!</p>
+</div>
+
 <img src="static/main_image.jpg" alt="Main Image" class="full-width-image">
 <div class="row-images">
     <div class="caption">
-       <a href="/unstitch">
+       <a href="{{url_for('unstitch',category=2)}}">
         <img src="static/unstitch.gif" alt="unstitch">
         <h3>UNSTITCH</h3>
        </a>
     </div>
     
     <div class="caption">
-        <a href="">
+        <a href="{{url_for('unstitch',category=1)}}">
             <img src="static/pret.gif" alt="PRET">
             <h3>PRET</h3>
-        </a>
-    </div>
-
-    <div class="caption">
-        <a href="">
-            <img src="static/hand bag.jpg" alt="HANDBAG">
-            <h3>HAND BAG</h3>
         </a>
     </div>
 </div>
 <div class="row-images">
     <div class="caption">
-        <a href="">
+        <a href="{{url_for('unstitch',category=5)}}">
             <img src="static/bottom.jpg" alt="BOTTOM">
             <h3>BOTTOM</h3>
         </a>
     </div>
 
     <div class="caption">
-        <a href="">
+        <a href="{{url_for('unstitch',category=4)}}">
             <img src="static/footwear.jpg" alt="FOOTWEAR">
             <h3>FOOTWEAR</h3>
         </a>
     </div>
-
-    <DIV CLASS="caption">
-        <a href="">
-        <img src="static/outerwaer.jpg" alt="OUTERWEAR">
-        <h3>OUTER WAER</h3>
-        </a>
-    </DIV>
 </div>
 {% endblock%}
+{% block script%}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var orderPlaced = '{{orderPlaced }}';
+
+      if (orderPlaced === 'True') {
+        var hiddenBox = document.getElementById("hiddenBox");
+        if (hiddenBox) {
+          hiddenBox.style.display = "block";
+        }
+      }
+    });
+  </script>
+{% endblock %}

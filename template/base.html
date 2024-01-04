@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-...." crossorigin="anonymous" />
-    <link rel="stylesheet" href="static/main.css">
+    <link rel="stylesheet" href="/static/main.css">
     <title>Zellbury Online Store</title>
-    {% block style%} {% endblock%}
     <style>
 
         h1 {
@@ -49,14 +48,16 @@
         }
 
     </style>
+    {% block style%} {% endblock%}
 </head>
 <body>
     <header>
         <div>
-        <a href="">WOMAN</a>
-        <a href="">FRAGRANCE</a>
-        <a href="">HOME</a>
-        <a href="">BAGS</a>
+            <a href="/">HOME</a>
+            <a href="{{url_for('unstitch',category=2)}}">UNSTITCH</a>
+            <a href="{{url_for('unstitch',category=1)}}">READY TO WEAR</a>
+            <a href="{{url_for('unstitch',category=5)}}">BOTTOM</a>
+            <a href="{{url_for('unstitch',category=4)}}">FOOTWEAR</a>
         </div>
         <h1>ZELLBURY</h1>
         <div>
@@ -75,5 +76,7 @@
         </div>
         <p>ZELLBURY© 2023 - All rights reserved.</p>
     </footer>
+    {% block script %}
+    {% endblock%}
 </body>
 </html>

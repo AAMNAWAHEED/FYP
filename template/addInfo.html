@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .main-container{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+        }
+        .form-container form{
+            display: flex;
+            flex-direction: column;
+        }
+        .form-container label{
+            display: block;
+            margin-bottom: 5px;
+            font-size: small;
+            width: 100%;
+        }
+        .form-container input, .form-container select{
+            width: 200%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box; 
+            font-size: 14px;
+        } 
+        .form-container button{
+            padding: 10px;
+            background-color: rgba(232, 110, 110, 0.652);
+            font-weight: bold;
+            font-size: medium;
+    
+        }
+        button:hover{
+            background-color:rgba(233, 127, 127, 0.652) ;
+        }
+        h3{
+            text-align: center;
+            background-color: rgb(248, 224, 228);;
+        }
+    </style>
+</head>
+<body>
+    <h3>Shipping Step</h3>
+<div class="main-container">
+    <div class="form-container">
+        <h4>Select Billing Address</h4>
+        <form action="/placeorder" method="POST">
+            {% macro inputField(name,label,placeholder,index,readonly) %}
+                <label for="{{name}}">{{label}}</label>
+                <input type="text" name="{{name}}" id="{{name}}"
+                {% if data and data[index] != None %}
+                   value={{data[index]}} {% if readonly%} readonly{% endif %}
+                {% else %}
+                    placeholder = "{{placeholder}}"
+                {% endif %}
+                required>
+            {% endmacro %}
+
+            {{ inputField('f_name','First Name',"Enter First Name",1,true) }}
+            {{ inputField('l_name','Last Name','Enter Last Name',2,true)}}
+            {{ inputField('mobile','Mobile Number','Mobile Number',5,false)}}
+            {{ inputField('country','Country','Your Country',10,false)}}
+            {{ inputField('address','Address',"your shipping address",11,false)}}
+            {{ inputField('city','City',"Your city",9,false)}}
+    
+            <label for="option">Select Payment Method</label>
+            <select name="option" id="option" required>
+                <option value="cash">Payment By Cash</option>
+                <option value="card">Payment By Card</option>
+            </select>
+            <button>PLACE ORDER</button>
+        </form>
+    </div>
+    <!--order summary-->
+    <div class="right-container">
+            <h3>Order SUMMARY</h3>
+            <hr>
+            <p>Subtotal         Rs.{{total}} </p>
+            <p>Shipping:     Rs.{{shipping}}</p>
+            <hr>
+            <p><b>Grand total:   Rs.{{grand_total}}</b></p>
+    </div>
+</div>
+</body>
+</html>
